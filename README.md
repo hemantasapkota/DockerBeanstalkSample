@@ -7,6 +7,7 @@ Hello World in Golang served with Docker. Deployable to AWS Beanstalk.
 * Docker: ```brew install docker```
 * VirtualBox: Download 4.3.26 for OSX from [here](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3)
 * Golang: ```brew install go```. Ensure that **$GOPATH** has been set. Usually to something like: **~/go/**
+* AWS Elastic Beanstalk CLI: ```pip install awsebcli```
 
 ### Setting up Boot2Docker ###
 
@@ -49,3 +50,48 @@ Add those variables to your **~/.bashrc** or **~/.zshrc** ( if you're using Z Sh
 * Test the app
   * Get boot2docker's ip: ```boot2docker ip```. Example output: ```192.168.59.103```
   * open ```http://192.168.59.103:8080```. You should have a running app now.
+
+### Deploy to AWS Beanstalk ###
+
+#### Elastic Beanstalk Init - eb init ####
+```
+cd DockerBeanstalkSample
+
+eb init -i
+
+#Select your region
+
+# AWS Credentials - http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html
+# Provide your aws-access-id
+# Provide your aws-secret-key
+# Note if you're creating new user through AWS IAM, you'll need to attach AmazonEC2FullAccess and AWSBeanstalkFullAccess policies to the user.
+
+# Application Name: DockerBeanstalkSample
+
+# It appears you are using Docker. Is this correct ?
+# Answer: Y
+
+# Do you want to set up SSH for your instances ?
+# Answer: Y
+
+# Select a keypair:
+# Answer: 2
+
+# Type a keypair name:
+# (Default is aws-eb): aws-eb
+# Generating public/private rsa key pair.
+# Enter passphrase ( emptry for no passphrase): sample
+```
+
+#### Elastic Beanstalk Create - eb create ####
+
+```
+eb create
+
+# Enter environment name (default is DockerBeanstalkSample-0): 
+# Enter DNS CNAME prefix (default is DockerBeanstalkSample-0):
+
+```
+
+About 5 - 10 minutes later, you should get:
+```INFO: Successfully launched environment: DockerBeanstalkSample-0```
