@@ -98,6 +98,10 @@ About 5 - 10 minutes later, you should get:
 
 http://dockerbeanstalksample-0.elasticbeanstalk.com/
 
+### Elastic Beanstalk Update - eb deploy ###
+
+Just execute ```eb deploy``` to push out new versions.
+
 ### Author ###
 * [Hemanta Sapkota](https://twitter.com/ozhemanta) / [Blog](http://hemantasapkota.github.io/) / [Linked In](https://au.linkedin.com/in/hemantasapkota)
 
