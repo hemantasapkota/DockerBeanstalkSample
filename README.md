@@ -95,3 +95,5 @@ eb create
 
 About 5 - 10 minutes later, you should get:
 ```INFO: Successfully launched environment: DockerBeanstalkSample-0```
+
+http://dockerbeanstalksample-0.elasticbeanstalk.com/
