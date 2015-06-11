@@ -3,13 +3,43 @@ Hello World in Golang served with Docker. Deployable to AWS Beanstalk. For OSX.
 
 ### Dependencies ###
 
-* boot2docker: ```brew install boot2docker```
+* Docker Machine: Download latest release from https://github.com/docker/machine/releases
+* boot2docker: ```brew install boot2docker``` ( Only required if docker machine does not work )
 * Docker: ```brew install docker```
 * VirtualBox: Download 4.3.26 for OSX from [here](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3)
 * Golang: ```brew install go```. Ensure that **$GOPATH** has been set. Usually to something like: **~/go/**
 * AWS Elastic Beanstalk CLI: ```pip install awsebcli```
 
-### Setting up Boot2Docker ###
+### Setting up Docker Machine ###
+
+* Download the latest release from https://github.com/docker/machine/releases
+* Rename executable to **docker-machine**, copy it to ```/usr/local/bin/docker-machine``` and ```chmod +x /usr/local/bin/docker-machine```
+* Create a VM using: ```docker-machine create -d virtualbox dev```
+        
+        Creating VirtualBox VM...
+        Creating SSH key...
+        Starting VirtualBox VM...
+        Starting VM...
+        To see how to connect Docker to this machine, run: docker-machine env dev
+
+* Execute: ```docker-machine env dev```
+
+        export DOCKER_TLS_VERIFY="1"
+        export DOCKER_HOST="tcp://192.168.99.100:2376"
+        export DOCKER_CERT_PATH="/Users/hemantasapkota/.docker/machine/machines/dev"
+        export DOCKER_MACHINE_NAME="dev"
+        # Run this command to configure your shell:
+        # eval "$(docker-machine env dev)"
+        # Save the exports to ~/.bashrc or ~/.zshrc file
+        
+* Check the status of the VM: ```docker-machine ls```
+
+        NAME   ACTIVE   DRIVER       STATE     URL                         SWARM
+        dev    *        virtualbox   Running   tcp://192.168.99.100:2376
+        
+        # Take a note of the IP address of the machine
+
+### Setting up Boot2Docker ( Only set this up if, docker-machine fails for some reason ) ###
 
 * ```boot2docker init```
 ```
@@ -48,10 +78,13 @@ Add those variables to your **~/.bashrc** or **~/.zshrc** ( if you're using Z Sh
     * Log: ```[negroni] listening on :8080``` 
 
 * Test the app
-  * Get boot2docker's ip: ```boot2docker ip```. Example output: ```192.168.59.103```
-  * open ```http://192.168.59.103:8080```. You should have a running app now.
+  * List the IP using ```docker-machine ls```
+  * If you're using boot2docker, get boot2docker's ip: ```boot2docker ip```. Example output: ```192.168.59.100```
+  * open ```http://192.168.59.100:8080```. You should have a running app now.
 
 ### Deploy to AWS Beanstalk ###
+
+You'll need Amazon AWS account. If you don't have one, you can register for Amazon's free tier service.
 
 #### Elastic Beanstalk Init - eb init ####
 ```
